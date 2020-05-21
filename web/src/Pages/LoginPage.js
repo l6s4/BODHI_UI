@@ -1,58 +1,44 @@
 import React, { Component } from 'react';
 import './LoginPage.css';
+import loginFetch from '../redux/actions/loginFetch';
+import { connect } from 'react-redux';
 class LoginPage extends Component {
-    constructor(props) {
-        super(props);
-        this.emailEl = React.createRef();
-        this.passwordEl = React.createRef();
+    state = {
+        email_id: "",
+        password: ""
+    }
+    changeHandler = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
     }
     submitHandler = (event) => {
         event.preventDefault();
-        const email = this.emailEl.current.value;
-        const password = this.passwordEl.current.value;
+        const email = this.state.email_id;
+        const password = this.state.password;
         if (email.trim().length === 0 || password.trim().length === 0) {
             return;
         }
         console.log(email, password);
-        const requestBody = {
-            query: `
-            mutation{
-                login(email_id:"${email}",password:"${password}")
-            }
-            `
-        }
-        fetch('http://localhost:4000', {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-            if (res.status !== 200 && res.status !== 201) {
-                throw new Error('Failed!');
-            }
-            return res.json();
-        })
-            .then(resData => {
-                console.log(`Response:${JSON.stringify(resData)}`);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-
+        loginFetch(email, password);
     }
     render() {
         return (
             <div className="login">
                 <h1>Login to Bodhi</h1>
-                <form className="login-form" onSubmit={this.submitHandler}>
-                    <p>  <input placeholder="Username" type="email" id="email" ref={this.emailEl}></input></p>
-                    <p>   <input placeholder="Password" type="password" id="password" ref={this.passwordEl}></input></p>
-                    <p>  <button type="submit">Login</button></p>
+                <form className="login-form">
+                    <p>  <input placeholder="Email-id" type="email" name="email_id" value={this.state.email_id} onChange={this.changeHandler}></input></p>
+                    <p>   <input placeholder="Password" type="password" name="password" value={this.state.password} onChange={this.changeHandler}></input></p>
+                    <p>  <button type="submit" onClick={this.submitHandler}>Login</button></p>
                 </form>
             </div>
         );
     }
 }
 
-export default LoginPage;
+const mapDispatchToProps = dispatch => ({
+    loginFetch: userInfo => dispatch(loginFetch(userInfo))
+})
+
+export default connect(null, mapDispatchToProps)(LoginPage);
+
