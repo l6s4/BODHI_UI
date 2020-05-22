@@ -1,0 +1,48 @@
+.createUser {
+    position: relative;
+    margin: 30px auto;
+    padding: 20px 20px 20px;
+    width: 310px;
+    background: white;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  .createUser h1 {
+    margin: -20px -20px 21px;
+    line-height: 40px;
+    font-family: Ubuntu;
+    font-size: 15px;
+    font-weight: bold;
+    color: #555;
+    text-align: center;
+    text-shadow: 0 1px white;
+    background: #f3f3f3;
+    border-bottom: 1px solid #cfcfcf;
+    border-radius: 3px 3px 0 0;
+    background-image: -webkit-linear-gradient(top, whiteffd, #eef2f5);
+    background-image: -moz-linear-gradient(top, whiteffd, #eef2f5);
+    background-image: -o-linear-gradient(top, whiteffd, #eef2f5);
+    background-image: linear-gradient(to bottom, whiteffd, #eef2f5);
+    -webkit-box-shadow: 0 1px whitesmoke;
+    box-shadow: 0 1px whitesmoke;
+  }
+  
+  .createUser p {
+    margin: 20px 0 0;
+  }
+  
+  .createUser p {
+    margin: 20px 0 0;
+  }
+  
+  .createUser p:first-child {
+    margin-top: 0;
+  }
+  
+  .createUser input[type=email], .createUser input[type=password] {
+    width: 278px;
+  }
+  .createUser p.submit {
+    text-align: right;
+  }

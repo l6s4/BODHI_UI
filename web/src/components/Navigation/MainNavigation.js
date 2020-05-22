@@ -13,6 +13,9 @@ const mainNavigation = props => (
                 <li>
                     <NavLink to="/login">Login</NavLink>
                 </li>
+                <li>
+                    <NavLink to="/createUser">Create User</NavLink>
+                </li>
             </ul>
         </nav>
     </header>
