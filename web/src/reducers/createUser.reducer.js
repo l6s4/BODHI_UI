@@ -1,14 +1,19 @@
-import { SUCCESS } from '../constants/constants';
+import { USER_CREATED, USER_NOT_CREATED } from '../constants/constants';
 
 const initialState = {
-    email_id:""
+  successMsg: ""
 }
 
 function createUser(state = initialState, action) {
   switch (action.type) {
-    case SUCCESS:
+    case USER_CREATED:
       return {
-        email_id: action.token
+        successMsg: action.successMsg
+      }
+    case USER_NOT_CREATED:
+      return {
+        error: action.error,
+        errorOccurred: true
       }
     default:
       return state

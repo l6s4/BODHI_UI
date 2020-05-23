@@ -1,2 +1,2 @@
-const actions = { LOGIN: 'LOGIN', LOGOUT: 'LOGOUT', SUCCESS: 'SUCCESS', ERROR: 'ERROR' };
+const actions = { LOGIN: 'LOGIN', LOGOUT: 'LOGOUT', SUCCESS: 'SUCCESS', ERROR: 'ERROR', USER_CREATED: 'USER_CREATED', USER_NOT_CREATED: 'USER_NOT_CREATED' };
 module.exports = actions;

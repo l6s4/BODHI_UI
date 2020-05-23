@@ -1,4 +1,4 @@
-import { SUCCESS, ERROR } from '../constants/constants';
+import { USER_CREATED,USER_NOT_CREATED } from '../constants/constants';
 import creatUser from '../service/createUser.service';
 
 function createUser(userInfo) {
@@ -12,7 +12,7 @@ function createUser(userInfo) {
   }
 }
 
-function success(token) { return { type: SUCCESS, token } };
-function failure(error) { return { type: ERROR, error } };
+function success(successMsg) { return { type: USER_CREATED, successMsg } };
+function failure(error) { return { type: USER_NOT_CREATED, error } };
 
 export default createUser;

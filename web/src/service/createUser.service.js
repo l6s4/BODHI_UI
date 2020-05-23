@@ -2,20 +2,33 @@ import store from '../stores/store';
 const createUser = (userInfo) => {
   const storeToken = store.getState().login.token;
   console.log(`storeToken:${JSON.stringify(storeToken)}`);
+  console.log(`userInfo:${userInfo}`);
   const requestBody = {
     query: `
-          mutation{
-            createUser(email_id:"patient@gmail.com",password:"p123",first_name:"Patient",last_name:"P",
-            user_type:"P",dob:"1980-04-05",address:"Address 1",contact_no:"1111111111")
-        }`
-
-      //   query: `
-      //   mutation{
-      //     createUser(email_id:${userInfo.email_id},password:"p123",first_name:"Patient",last_name:"P",
-      //     user_type:"P",dob:"1980-04-05",address:"Address 1",contact_no:"1111111111")
-      // }`
-  }
-  return fetch('http://localhost:4000', {
+          mutation CreateUser($email_id:String!,$password:String!,$first_name:String!,$last_name:String!,$user_type:String!,$dob:String!,
+            $address:String!,$contact_no:String!,$clinic_id:String!)
+          {
+            createUser(createUserInput:{email_id:$email_id,password:$password,first_name:$first_name,last_name:$last_name,
+            user_type:$user_type,dob:$dob,address:$address,contact_no:$contact_no,clinic_id:$clinic_id}) {
+              status
+              email_id
+              user_type
+              message
+            }
+        }`,
+    variables: {
+      email_id: userInfo.email_id,
+      password: userInfo.password,
+      first_name: userInfo.first_name,
+      last_name: userInfo.last_name,
+      user_type: userInfo.user_type,
+      dob: userInfo.dob,
+      address: userInfo.address,
+      contact_no: userInfo.contact_no,
+      clinic_id: userInfo.clinic_id
+    }
+  };
+  return fetch('http://localhost:4000/graphql', {
     method: 'POST',
     body: JSON.stringify(requestBody),
     headers: {
@@ -23,17 +36,14 @@ const createUser = (userInfo) => {
       'Authorization': storeToken
     }
   }).then(res => {
-    console.log(`Response from UserService:${JSON.stringify(res)}`);
-
-    if (res.status !== 200 && res.status !== 201) {
-      throw new Error('Failed!');
-    }
     return res.json();
   }).then(resData => {
-    console.log(`Response:${JSON.stringify(resData.message)}`);
-    return resData;
+    if (resData.data.createUser.message)
+      throw new Error(resData.data.createUser.message);
+    return resData.data.createUser;
   }).catch(err => {
     console.log(err);
+    throw err;
   });
 }
 

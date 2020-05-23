@@ -30,7 +30,7 @@ class LoginPage extends Component {
   render() {
     return (
       <div className="login">
-        <h1>Login to Bodhi</h1>
+        <h1>Login to Bodhi {this.props.token}</h1>
         <form className="login-form">
           <table>
             <tbody>
@@ -49,13 +49,17 @@ class LoginPage extends Component {
             </tbody>
           </table>
         </form>
+
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { token: state.login.token };
+  return {
+    token: state.login.token,
+    error: state.errorOccurred
+  };
 }
 
 const mapDispatcherToProps = {

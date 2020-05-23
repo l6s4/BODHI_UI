@@ -7,6 +7,8 @@ const login = (email_id, password) => {
               email_id
               first_name
               last_name
+              status
+              message
             }
         }`,
     variables: {
@@ -21,16 +23,14 @@ const login = (email_id, password) => {
       'Content-Type': 'application/json'
     }
   }).then(res => {
-    if (res.status !== 200 && res.status !== 201) {
-      throw new Error('Failed!');
-    }
     return res.json();
   }).then(resData => {
-    //console.log(`Response:${JSON.stringify(resData.data.login.email_id)}`);
-    localStorage.setItem("token", resData.data.login.token);
+    if (resData.data.login.status === 500)
+      throw new Error(resData.data.login.message);
     return resData.data.login;
   }).catch(err => {
     console.log(err);
+    throw err;
   });
 }
 

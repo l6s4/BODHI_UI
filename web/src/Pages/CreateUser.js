@@ -7,16 +7,15 @@ class CreateUser extends Component {
         super(props);
         this.submitHandler = this.submitHandler.bind(this);
         this.state = {
-            userInfo: [{
-                email_id: "",
-                password: "",
-                first_name: "",
-                last_name: "",
-                user_type: "",
-                dob: "",
-                address: "",
-                contact_no: ""
-            }]
+            email_id: "",
+            password: "",
+            first_name: "",
+            last_name: "",
+            user_type: "",
+            dob: "",
+            address: "",
+            contact_no: "",
+            clinic_id: ""
         }
     }
     changeHandler = (event) => {
@@ -26,7 +25,19 @@ class CreateUser extends Component {
     }
     submitHandler = (event) => {
         event.preventDefault();
-        this.props.createUser(this.state.userInfo);
+        console.log(this.state.password);
+        const userInfo = {
+            email_id: this.state.email_id,
+            password: this.state.password,
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            user_type: this.state.user_type,
+            dob: this.state.dob,
+            address: this.state.address,
+            contact_no: this.state.contact_no,
+            clinic_id: this.state.clinic_id
+        }
+        this.props.createUser(userInfo);
     }
     render() {
         return (
@@ -41,16 +52,22 @@ class CreateUser extends Component {
                     <p>   <input placeholder="Date Of Birth" type="dob" name="dob" value={this.state.dob} onChange={this.changeHandler}></input></p>
                     <p>   <input placeholder="Address" type="address" name="address" value={this.state.address} onChange={this.changeHandler}></input></p>
                     <p>   <input placeholder="Contact No." type="contact_no" name="contact_no" value={this.state.contact_no} onChange={this.changeHandler}></input></p>
+                    <p>   <input placeholder="Clinic ID" type="clinic_id" name="clinic_id" value={this.state.clinic_id} onChange={this.changeHandler}></input></p>
                     <p>  <button className="button button1" onClick={this.submitHandler}>Create</button></p>
                 </form>
             </div>
         );
     }
 }
+function mapStateToProps(state) {
+    return {
+        successMsg: state.successMsg,
+        error: state.errorOccurred
+    };
+}
+const mapDispatcherToProps = {
+    createUser
+}
+export default connect(mapStateToProps, mapDispatcherToProps)(CreateUser);
 
-const mapDispatchToProps = dispatch => ({
-    createUser: userInfo => dispatch(createUser(userInfo))
-})
-
-export default connect(null, mapDispatchToProps)(CreateUser);
 

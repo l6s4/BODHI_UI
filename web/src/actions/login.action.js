@@ -6,7 +6,7 @@ function loginFetch(email, password) {
     login(email, password)
       .then(response => {
         dispatch(success(response));
-      }, error => {
+      }).catch(error => {
         dispatch(failure(error.toString()));
       });
   }
