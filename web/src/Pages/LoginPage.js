@@ -1,55 +1,77 @@
 import React, { Component } from 'react';
 import './LoginPage.css';
 import Button from '../components/Button';
+import Example from './Example';
+import Input from '../components/Input';
+import { Redirect } from 'react-router-dom';
 import loginFetch from '../actions/login.action';
 import { connect } from 'react-redux';
+
 class LoginPage extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
-    this.submitHandler = this.submitHandler.bind(this);
+
     this.state = {
       email_id: "",
-      password: ""
+      password: "",
+      submitted: false
     }
+
+    this.submitHandler = this.submitHandler.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
+
   }
   changeHandler = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [ event.target.name ]: event.target.value
     });
   }
   submitHandler = (event) => {
     event.preventDefault();
-    const email_id = this.state.email_id;
-    const password = this.state.password;
+    this.setState({ submitted: true });
+    const { email_id, password } = this.state;
     if (email_id.trim().length === 0 || password.trim().length === 0) {
       return;
     }
     console.log(email_id, password);
     this.props.loginFetch(email_id, password);
   }
+  signUpHandler = (event) => {
+    event.preventDefault();
+    this.props.history.push("/createUser");
+  }
   render() {
+    const { loggingIn } = this.props;
+    const { email_id, password, submitted } = this.state;
+
+    if (this.props.loggedIn) {
+      return <Redirect to="/userprofile" />
+    }
     return (
       <div className="login">
-        <h1>Login to Bodhi {this.props.token}</h1>
+        <h1>Login to Bodhi {this.props.loggedIn}</h1>
         <form className="login-form">
           <table>
             <tbody>
               <tr>
-                <td><input placeholder="Email-id" type="email" name="email_id" value={this.state.email_id} onChange={this.changeHandler}></input></td>
+                <td><Input placeholder="Email-id" type="email" name="email_id" value={this.state.email_id} onChange={this.changeHandler}></Input></td>
+              </tr>
+              <tr><td>{submitted && !email_id && <div className="label" >Please enter your Username</div>}</td>
               </tr>
               <tr>
                 <td><input placeholder="Password" type="password" name="password" value={this.state.password} onChange={this.changeHandler}></input></td>
               </tr>
-              <tr align="center">
-                <td><button className="button button1" onClick={this.submitHandler} text="Login">Login</button>
-                  <button className="button button1" onClick={this.submitHandler} text="Sign Up">Sign Up</button></td>
-                {/* <td><Button onClick={this.submitHandler} text="Login"></Button>
-                  <Button onClick={this.submitHandler} text="Sign Up"></Button></td> */}
+              <tr><td>{submitted && !password && <div className="label">Please enter your Password</div>}</td>
               </tr>
+              <tr align="center">
+                <td><Button className="button button1" onClick={this.submitHandler}>Login</Button>
+                  <Button className="button button1" onClick={this.signUpHandler}>Sign Up</Button></td>
+              </tr>
+              {/* <tr><td>{this.props.errorOccurred && <Error>{this.props.errorMsg}</Error>}</td></tr> */}
+              <tr><td>{this.props.errorOccurred && <p style={{ color: "red" }}>{this.props.errorMsg}</p>}</td></tr>
             </tbody>
           </table>
         </form>
-
       </div>
     );
   }
@@ -58,7 +80,10 @@ class LoginPage extends Component {
 function mapStateToProps(state) {
   return {
     token: state.login.token,
-    error: state.errorOccurred
+    loggedIn: state.login.loggedIn,
+    loggedUser: state.login.loggedUser,
+    errorOccurred: state.login.errorOccurred,
+    errorMsg: state.login.errorMsg
   };
 }
 

@@ -1,8 +1,8 @@
 import store from '../stores/store';
 const createUser = (userInfo) => {
   const storeToken = store.getState().login.token;
-  console.log(`storeToken:${JSON.stringify(storeToken)}`);
-  console.log(`userInfo:${userInfo}`);
+  // console.log(`storeToken:${JSON.stringify(storeToken)}`);
+  // console.log(`userInfo:${userInfo}`);
   const requestBody = {
     query: `
           mutation CreateUser($email_id:String!,$password:String!,$first_name:String!,$last_name:String!,$user_type:String!,$dob:String!,

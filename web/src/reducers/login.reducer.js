@@ -1,21 +1,26 @@
-import { SUCCESS,ERROR } from '../constants/constants';
-
+import { statusActions } from '../constants/constants';
+const { LOGIN_SUCCESS, LOGIN_FAILURE } = statusActions;
 const initialState = {
   token: "",
+  loggedIn: false,
+  loggedUser: "",
+  errorMsg: "",
+  errorOccurred: false
 }
 
 function login(state = initialState, action) {
-  console.log(`Action:${JSON.stringify(action)}`);
-
+  //console.log(`Action:${JSON.stringify(action)}`);
   switch (action.type) {
-    case SUCCESS:
+    case LOGIN_SUCCESS:
       return {
-        token: action.token.token
+        token: action.user.data.login.token,
+        loggedIn: true,
+        loggedUser: action.user.data.login.email_id
       }
-    case ERROR:
+    case LOGIN_FAILURE:
       return {
-        error: action.error,
-        errorOccurred:true
+        errorMsg: action.error,
+        errorOccurred: true
       }
     default:
       return state

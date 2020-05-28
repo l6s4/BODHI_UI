@@ -1,18 +1,19 @@
-import { SUCCESS, ERROR } from '../constants/constants';
+import { statusActions } from '../constants/constants';
 import login from '../service/login.service';
+const { LOGIN_SUCCESS, LOGIN_FAILURE } = statusActions;
 
 function loginFetch(email, password) {
   return dispatch => {
     login(email, password)
-      .then(response => {
-        dispatch(success(response));
+      .then(user => {
+        dispatch(success(user));
       }).catch(error => {
         dispatch(failure(error.toString()));
       });
   }
 }
 
-function success(token) { return { type: SUCCESS, token } };
-function failure(error) { return { type: ERROR, error } };
+function success(user) { return { type: LOGIN_SUCCESS, user } };
+function failure(error) { return { type: LOGIN_FAILURE, error } };
 
 export default loginFetch;

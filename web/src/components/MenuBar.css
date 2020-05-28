@@ -1,0 +1,35 @@
+.menubar {
+  float: left;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 15%;
+  background-color: whitesmoke;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  text-align: left;
+}
+
+li a {
+  display: block;
+  color: #000;
+  padding: 20px 16px;
+  text-decoration:none;
+  font-family: Ubuntu;
+  font-size: 20px;
+  color:green;
+}
+
+li a.active {
+  background-color:rgb(4, 36, 4);
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: rgb(4, 54, 4);
+  color: white;
+}

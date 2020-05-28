@@ -1,6 +1,10 @@
 .login {
-  position: relative;
-  margin: 30px auto;
+  float: none;
+  margin: 0 auto;
+  margin-top: 300px;
+  /* height:200px; */
+  /* margin-top: 300px;
+  margin-left:350px; */
   padding: 20px 20px 20px;
   width: 310px;
   background: white;
@@ -8,22 +12,23 @@
   -webkit-box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
 }
+
 .login h1 {
   margin: -20px -20px 21px;
   line-height: 40px;
   font-family: Ubuntu;
   font-size: 15px;
   font-weight: bold;
-  color: #555;
+  color: whitesmoke;
   text-align: center;
-  text-shadow: 0 1px white;
   background: #f3f3f3;
+  background-color: green;
   border-bottom: 1px solid #cfcfcf;
   border-radius: 3px 3px 0 0;
-  background-image: -webkit-linear-gradient(top, whiteffd, #eef2f5);
+  /* background-image: -webkit-linear-gradient(top, whiteffd, #eef2f5);
   background-image: -moz-linear-gradient(top, whiteffd, #eef2f5);
   background-image: -o-linear-gradient(top, whiteffd, #eef2f5);
-  background-image: linear-gradient(to bottom, whiteffd, #eef2f5);
+  background-image: linear-gradient(to bottom, whiteffd, #eef2f5); */
   -webkit-box-shadow: 0 1px whitesmoke;
   box-shadow: 0 1px whitesmoke;
 }
@@ -43,6 +48,15 @@
 .login input[type=email], .login input[type=password] {
   width: 278px;
 }
+
 .login p.submit {
   text-align: right;
+}
+
+.label {
+  color: red;
+  font-size: 15px;
+  font-family: Dancing Script;
+  font-weight: bold;
+  padding-left: 100px;
 }

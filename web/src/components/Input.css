@@ -1,0 +1,6 @@
+input {
+    border: none;
+    border-bottom: 2px solid green;
+    float:right;
+    /* padding-left: 30px; */
+}
