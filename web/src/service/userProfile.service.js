@@ -9,7 +9,7 @@ const userProfile = async (email_id) => {
             getUserByEmail(email_id:$email_id) {
               email_id
               first_name
-              user_type
+              last_name
               password
               dob
               address
@@ -20,7 +20,7 @@ const userProfile = async (email_id) => {
       email_id: email_id
     }
   };
-  const response=await fetch('http://localhost:4000/graphql', {
+  const response = await fetch('http://localhost:4000/graphql', {
     method: 'POST',
     body: JSON.stringify(requestBody),
     headers: {
@@ -32,8 +32,8 @@ const userProfile = async (email_id) => {
 }
 async function throwOnFailure(resData) {
   if (resData.status !== 200 && resData.status !== 201) {
-      const error = await resData.json();
-      throw new Error(error.errors[ 0 ].message);
+    const error = await resData.json();
+    throw new Error(error.errors[ 0 ].message);
   }
   return resData;
 }

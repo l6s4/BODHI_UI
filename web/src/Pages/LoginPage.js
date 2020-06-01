@@ -54,12 +54,12 @@ class LoginPage extends Component {
           <table>
             <tbody>
               <tr>
-                <td><Input placeholder="Email-id" type="email" name="email_id" value={this.state.email_id} onChange={this.changeHandler}></Input></td>
+                <td><Input placeholder="Email-id" type="email" name="email_id" onChange={this.changeHandler}></Input></td>
               </tr>
               <tr><td>{submitted && !email_id && <div className="label" >Please enter your Username</div>}</td>
               </tr>
               <tr>
-                <td><input placeholder="Password" type="password" name="password" value={this.state.password} onChange={this.changeHandler}></input></td>
+                <td><input placeholder="Password" type="password" name="password" onChange={this.changeHandler}></input></td>
               </tr>
               <tr><td>{submitted && !password && <div className="label">Please enter your Password</div>}</td>
               </tr>

@@ -5,7 +5,6 @@ const initialState = {
 }
 
 function userProfile(state = initialState, action) {
-  console.log(`Get User Action:${JSON.stringify(action)}`);
   switch (action.type) {
     case GET_USER_SUCCESS:
       return {

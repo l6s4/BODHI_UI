@@ -9,13 +9,20 @@ import Box from '../components/Box';
 import Input from '../components/Input';
 import MenuBar from '../components/MenuBar';
 import userProfile from '../actions/userProfile.action';
-import createUser from '../actions/createUser.action';
+import updateUser from '../actions/updateUser.action';
 class UserProfile extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      user: "",
-      dob: new Date()
+      user: {
+        email_id: "",
+        password: "",
+        first_name: "",
+        last_name: "",
+        dob: "",
+        address: "",
+        contact_no: ""
+      }
     };
     this.changeHandler = this.changeHandler.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -24,15 +31,15 @@ class UserProfile extends Component {
   componentDidMount() {
     this.props.userProfile(this.props.loggedUser);
   }
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.user) {
-      let newDob = new Date(this.props.user.dob);
-      newDob.setHours(0, 0, 0, 0);
-      if (prevState && prevState.dob && prevState.dob.toDateString() != newDob.toDateString()) {
-        this.setState({ dob: newDob });
-      }
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.props.user) {
+  //     let newDob = new Date(this.props.user.dob);
+  //     newDob.setHours(0, 0, 0, 0);
+  //     if (prevState && prevState.dob && prevState.dob.toDateString() != newDob.toDateString()) {
+  //       this.setState({ dob: newDob });
+  //     }
+  //   }
+  // }
   changeHandler = (event) => {
     this.setState({
       [ event.target.name ]: event.target.value
@@ -45,18 +52,22 @@ class UserProfile extends Component {
   };
   submitHandler = (event) => {
     event.preventDefault();
-    console.log(this.state.password);
+    if (!this.state.password) {
+      alert("Please enter your password");
+      return;
+    }
     const userInfo = {
-      email_id: this.state.email_id,
+      email_id: this.props.user.email_id,
       password: this.state.password,
       first_name: this.state.first_name,
       last_name: this.state.last_name,
-      user_type: this.state.user_type,
       dob: this.state.dob,
       address: this.state.address,
-      contact_no: this.state.contact_no,
+      contact_no: this.state.contact_no
     }
-    this.props.createUser(userInfo);
+    Object.keys(userInfo).forEach((key) => (userInfo[ key ] == null) && delete userInfo[ key ]);
+    const userToSave = Object.assign(this.props.user, userInfo);
+    this.props.updateUser(userToSave);
   }
   render() {
     return (
@@ -79,17 +90,16 @@ class UserProfile extends Component {
                       <td><Input type="last_name" name="last_name" defaultValue={this.props.user.last_name} onChange={this.changeHandler} /></td>
                     </tr>
                     <tr>
-                      <td><Label>User Type</Label></td>
-                      <td><Input type="user_type" name="user_type" defaultValue={this.props.user.user_type} onChange={this.changeHandler} /></td>
+                      <td><Label>Password</Label></td>
+                      <td><Input type="password" name="password" defaultValue={this.props.user.password} onChange={this.changeHandler} /></td>
                     </tr>
                     <tr>
                       <td><Label>Date Of Birth</Label></td>
                       <td>
                         <DatePicker
-                          selected={this.state.dob}
+                          selected={new Date(this.state.dob || this.props.user.dob)}
                           onChange={this.handleChange}
                           dateFormat="yyyy-MM-dd"
-                          defaultValue={this.props.user.dob}
                         />
                       </td>
                     </tr>
@@ -105,6 +115,7 @@ class UserProfile extends Component {
                       <td><Button className="button button1" align="center" onClick={this.submitHandler}>Save Changes</Button>
                       </td>
                     </tr>
+                    {this.props.updated && <tr><td><div className="label">Details Updated</div></td></tr>}
                   </tbody>
                 </table>
               </>}
@@ -118,13 +129,14 @@ class UserProfile extends Component {
 function mapStateToProps(state) {
   return {
     loggedUser: state.login.loggedUser,
-    user: state.userProfile.user
+    user: state.userProfile.user,
+    updated: state.updateUser.updated
   };
 }
 
 const mapDispatcherToProps = {
   userProfile,
-  createUser
+  updateUser
 }
 
 export default connect(mapStateToProps, mapDispatcherToProps)(UserProfile);
