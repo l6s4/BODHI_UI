@@ -25,13 +25,10 @@ class App extends Component {
           <h1>{this.props.errorMsg}</h1>
           <Switch>
             <Redirect from="/" to="/login" exact />
-            {/* <Route path="/sample" component={samplePage} /> */}
             <Route path="/login" component={LoginPage} />
             <Route path="/userProfile" component={UserProfile} />
-            {/* <Route path="/login" component={LoginPage} />
             <Route path="/createUser" component={CreateUser} />
-            <Route path="/userProfile" component={UserProfile} />
-            <Route path="/logout" component={LoginPage} /> */}
+            <Route path="/logout" component={LoginPage} />
           </Switch>
         </main>
       </BrowserRouter>
