@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './LoginPage.css';
 import Button from '../components/Button';
-import Example from './Example';
 import Input from '../components/Input';
 import { Redirect } from 'react-router-dom';
 import loginFetch from '../actions/login.action';
@@ -10,7 +9,6 @@ import { connect } from 'react-redux';
 class LoginPage extends Component {
   constructor (props) {
     super(props);
-
     this.state = {
       email_id: "",
       password: "",
@@ -40,16 +38,15 @@ class LoginPage extends Component {
     event.preventDefault();
     this.props.history.push("/createUser");
   }
-  render() {
-    const { loggingIn } = this.props;
-    const { email_id, password, submitted } = this.state;
 
+  render() {
+    const { email_id, password, submitted } = this.state;
     if (this.props.loggedIn) {
       return <Redirect to="/userprofile" />
     }
     return (
       <div className="login">
-        <h1>Login to Bodhi {this.props.loggedIn}</h1>
+        <h1>Login to Bodhi</h1>
         <form className="login-form">
           <table>
             <tbody>

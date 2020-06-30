@@ -1,16 +1,13 @@
-import { statusActions } from '../constants/constants';
-const { GET_USER_SUCCESS, GET_USER_FAILURE } = statusActions;
-const initialState = {
-  user:""
-}
+import * as statusActions from '../constants/actionTypes';
 
-function userProfile(state = initialState, action) {
+function userProfile(state = [], action) {
+  console.log(`User Profile reducer:${JSON.stringify(action)}`);
   switch (action.type) {
-    case GET_USER_SUCCESS:
+    case statusActions.GET_USER_SUCCESS:
       return {
         user: action.successMsg.data.getUserByEmail
       }
-    case GET_USER_FAILURE:
+    case statusActions.GET_USER_FAILURE:
       return {
         errorMsg: action.error,
         errorOccurred: true

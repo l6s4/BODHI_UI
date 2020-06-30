@@ -1,17 +1,13 @@
-import { statusActions } from '../constants/constants';
-const { CREATE_USER_SUCCESS, CREATE_USER_FAILURE } = statusActions;
-const initialState = {
-  created_id: "",
-}
+import * as statusActions from '../constants/actionTypes';
 
-function createUser(state = initialState, action) {
-  console.log(`Create User action:${JSON.stringify(action)}`);
+function createUser(state = [], action) {
+  // console.log(`Create User action:${JSON.stringify(action)}`);
   switch (action.type) {
-    case CREATE_USER_SUCCESS:
+    case statusActions.CREATE_USER_SUCCESS:
       return {
         created_id: action.successMsg.data.createUser.email_id
       }
-    case CREATE_USER_FAILURE:
+    case statusActions.CREATE_USER_FAILURE:
       return {
         error: action.error,
         errorOccurred: true

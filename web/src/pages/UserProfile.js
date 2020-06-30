@@ -70,6 +70,7 @@ class UserProfile extends Component {
     this.props.updateUser(userToSave);
   }
   render() {
+    const { user } = this.props;
     return (
       <div>
         <div style={{ position: "fixed", left: "0px" }}><MenuBar /></div>
@@ -77,27 +78,27 @@ class UserProfile extends Component {
           <div className="userProfile" style={{ width: "30%", margin: "auto" }}>
             <Box>
               <h1>User Profile</h1>
-              {this.props.user && <> <p>{this.props.user.email_id}</p>
+              {user && <> <p>{user.email_id}</p>
                 <table>
                   <tbody>
                     <tr>
                       <td style={{ width: "50%" }}><Label>First Name</Label></td>
                       <td>
-                        <Input type="text" name="first_name" defaultValue={this.props.user.first_name} onChange={this.changeHandler} /></td>
+                        <Input type="text" name="first_name" defaultValue={user.first_name} onChange={this.changeHandler} /></td>
                     </tr>
                     <tr>
                       <td><Label>Last Name</Label></td>
-                      <td><Input type="last_name" name="last_name" defaultValue={this.props.user.last_name} onChange={this.changeHandler} /></td>
+                      <td><Input type="last_name" name="last_name" defaultValue={user.last_name} onChange={this.changeHandler} /></td>
                     </tr>
                     <tr>
                       <td><Label>Password</Label></td>
-                      <td><Input type="password" name="password" defaultValue={this.props.user.password} onChange={this.changeHandler} /></td>
+                      <td><Input type="password" name="password" defaultValue={user.password} onChange={this.changeHandler} /></td>
                     </tr>
                     <tr>
                       <td><Label>Date Of Birth</Label></td>
                       <td>
                         <DatePicker
-                          selected={new Date(this.state.dob || this.props.user.dob)}
+                          selected={new Date(this.state.dob || user.dob)}
                           onChange={this.handleChange}
                           dateFormat="yyyy-MM-dd"
                         />
@@ -105,11 +106,11 @@ class UserProfile extends Component {
                     </tr>
                     <tr>
                       <td><Label>Address</Label></td>
-                      <td><Input type="address" name="address" defaultValue={this.props.user.address} onChange={this.changeHandler} /></td>
+                      <td><Input type="address" name="address" defaultValue={user.address} onChange={this.changeHandler} /></td>
                     </tr>
                     <tr>
                       <td><Label>Contact Number</Label></td>
-                      <td><Input type="contact_no" name="contact_no" defaultValue={this.props.user.contact_no} onChange={this.changeHandler} /></td>
+                      <td><Input type="contact_no" name="contact_no" defaultValue={user.contact_no} onChange={this.changeHandler} /></td>
                     </tr>
                     <tr>
                       <td><Button className="button button1" align="center" onClick={this.submitHandler}>Save Changes</Button>

@@ -1,6 +1,5 @@
-import { statusActions } from '../constants/constants';
+import * as statusActions from '../constants/actionTypes';
 import updatUser from '../service/updateUser.service';
-const { UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE } = statusActions;
 function updateUser(userInfo) {
   return dispatch => {
     updatUser(userInfo)
@@ -12,7 +11,7 @@ function updateUser(userInfo) {
   }
 }
 
-function success(successMsg) { return { type: UPDATE_USER_SUCCESS, successMsg } };
-function failure(error) { return { type: UPDATE_USER_FAILURE, error } };
+function success(successMsg) { return { type: statusActions.UPDATE_USER_SUCCESS, successMsg } };
+function failure(error) { return { type: statusActions.UPDATE_USER_FAILURE, error } };
 
 export default updateUser;

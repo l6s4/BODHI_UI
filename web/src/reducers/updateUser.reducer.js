@@ -1,16 +1,12 @@
-import { statusActions } from '../constants/constants';
-const { UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE } = statusActions;
-const initialState = {
-  updated: false
-}
+import * as statusActions from '../constants/actionTypes';
 
-function updateUser(state = initialState, action) {
+function updateUser(state = [], action) {
   switch (action.type) {
-    case UPDATE_USER_SUCCESS:
+    case statusActions.UPDATE_USER_SUCCESS:
       return {
         updated: action.successMsg.data.updateUser.updated
       }
-    case UPDATE_USER_FAILURE:
+    case statusActions.UPDATE_USER_FAILURE:
       return {
         errorMsg: action.error,
         errorOccurred: true

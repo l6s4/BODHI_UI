@@ -1,6 +1,5 @@
-import { statusActions } from '../constants/constants';
+import * as statusActions from '../constants/actionTypes';
 import creatUser from '../service/createUser.service';
-const { CREATE_USER_SUCCESS, CREATE_USER_FAILURE } = statusActions;
 function createUser(userInfo) {
   return dispatch => {
     creatUser(userInfo)
@@ -12,7 +11,7 @@ function createUser(userInfo) {
   }
 }
 
-function success(successMsg) { return { type: CREATE_USER_SUCCESS, successMsg } };
-function failure(error) { return { type: CREATE_USER_FAILURE, error } };
+function success(successMsg) { return { type: statusActions.CREATE_USER_SUCCESS, successMsg } };
+function failure(error) { return { type: statusActions.CREATE_USER_FAILURE, error } };
 
 export default createUser;

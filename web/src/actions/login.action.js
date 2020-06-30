@@ -1,6 +1,5 @@
-import { statusActions } from '../constants/constants';
+import * as statusActions from '../constants/actionTypes';
 import login from '../service/login.service';
-const { LOGIN_SUCCESS, LOGIN_FAILURE } = statusActions;
 
 function loginFetch(email, password) {
   return dispatch => {
@@ -13,7 +12,7 @@ function loginFetch(email, password) {
   }
 }
 
-function success(user) { return { type: LOGIN_SUCCESS, user } };
-function failure(error) { return { type: LOGIN_FAILURE, error } };
+function success(user) { return { type: statusActions.LOGIN_SUCCESS, user } };
+function failure(error) { return { type: statusActions.LOGIN_FAILURE, error } };
 
 export default loginFetch;

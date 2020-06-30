@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import LoginPage from './pages/LoginPage';
+import LogOut from './pages/LogOut';
 import samplePage from './pages/samplePage';
 import CreateUser from './pages/CreateUser';
 import MainNavigation from './components/Navigation/MainNavigation';
 import UserProfile from './pages/UserProfile';
 import { connect } from 'react-redux';
+import BookAppointment from './pages/BookAppointment';
 
 class App extends Component {
   constructor (props) {
@@ -28,7 +30,8 @@ class App extends Component {
             <Route path="/login" component={LoginPage} />
             <Route path="/userProfile" component={UserProfile} />
             <Route path="/createUser" component={CreateUser} />
-            <Route path="/logout" component={LoginPage} />
+            <Route path="/logout" component={LogOut} />
+            <Route path="/booking" component={BookAppointment} />
           </Switch>
         </main>
       </BrowserRouter>
