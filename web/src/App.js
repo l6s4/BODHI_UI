@@ -9,6 +9,7 @@ import MainNavigation from './components/Navigation/MainNavigation';
 import UserProfile from './pages/UserProfile';
 import { connect } from 'react-redux';
 import BookAppointment from './pages/BookAppointment';
+import ClinicPage from './pages/ClinicPage';
 
 class App extends Component {
   constructor (props) {
@@ -32,6 +33,7 @@ class App extends Component {
             <Route path="/createUser" component={CreateUser} />
             <Route path="/logout" component={LogOut} />
             <Route path="/booking" component={BookAppointment} />
+            <Route path="/clinicPage" component={ClinicPage} />
           </Switch>
         </main>
       </BrowserRouter>

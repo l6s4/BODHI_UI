@@ -92,7 +92,7 @@ class UserProfile extends Component {
                     </tr>
                     <tr>
                       <td><Label>Password</Label></td>
-                      <td><Input type="password" name="password" defaultValue={user.password} onChange={this.changeHandler} /></td>
+                      <td><Input placeholder="Enter new Password" type="password" name="password" defaultValue={user.password} onChange={this.changeHandler} /></td>
                     </tr>
                     <tr>
                       <td><Label>Date Of Birth</Label></td>

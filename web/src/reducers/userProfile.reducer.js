@@ -1,7 +1,6 @@
 import * as statusActions from '../constants/actionTypes';
 
 function userProfile(state = [], action) {
-  console.log(`User Profile reducer:${JSON.stringify(action)}`);
   switch (action.type) {
     case statusActions.GET_USER_SUCCESS:
       return {
