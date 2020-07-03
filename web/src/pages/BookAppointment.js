@@ -37,7 +37,7 @@ class BookAppointment extends Component {
     this.props.getClinicDetails(selectedClinic);
   }
   render() {
-    const { clinic_name, submitted } = this.state;
+    const { submitted } = this.state;
     if (this.props.clinic_details) {
       return <Redirect to="/clinicPage" />
     }
@@ -49,17 +49,14 @@ class BookAppointment extends Component {
             <Box>
               <table>
                 <tbody>
-                  <tr>
-                    <td><h2>Book an Appointment with your Practitioner</h2></td></tr>
+                  <tr><td><h2>Book an Appointment with your Practitioner</h2></td></tr>
                   <tr><td>
                     <Select placeholder="Select Clinic" className="mt-4 col-md-8 col-offset-4" onChange={this.handleChange}
                       onInputChange={this.inputChangeHandler}
                       options={this.props.clinic_name && this.props.clinic_name.map(data => ({ label: data.key, value: data.id }))} /></td>
                   </tr>
                   <tr><td>{submitted && !this.props.clinic_name && <div className="label" >Please Select a Clinic</div>}</td></tr>
-                  <tr align="center">
-                    <td><Button className="button button1" onClick={this.submitHandler}>Search</Button>
-                    </td> </tr>
+                  <tr align="center"><td><Button className="button button1" onClick={this.submitHandler}>Search</Button></td></tr>
                 </tbody>
               </table>
             </Box>

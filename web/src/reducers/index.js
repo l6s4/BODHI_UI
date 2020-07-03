@@ -6,6 +6,7 @@ import updateUser from './updateUser.reducer';
 import userProfile from './userProfile.reducer';
 import getClinicName from './getClinicName.reducer';
 import getClinicDetails from './getClinicDetails.reducer';
+import getSchedule from './getSchedule.reducer';
 import * as statusActions from '../constants/actionTypes';
 
 const appReducer = combineReducers({
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   updateUser,
   getClinicName,
   getClinicDetails,
+  getSchedule,
   state: (state = {}) => state
 })
 

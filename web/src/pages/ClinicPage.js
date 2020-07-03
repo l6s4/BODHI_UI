@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MenuBar from '../components/MenuBar';
-import Box from '../components/Box';
 import ClinicDetails from '../components/ClinicDetails';
-import Button from '../components/Button';
+import getSchedule from '../actions/getSchedule.action';
 
 class ClinicPage extends Component {
   constructor (props) {
@@ -17,7 +16,7 @@ class ClinicPage extends Component {
   drHandler = (id) => {
     return (event) => {
       console.log(id);
-
+      this.props.getSchedule(id);
     }
   }
 
@@ -41,7 +40,7 @@ class ClinicPage extends Component {
                     <p>Email: {clinic_details.email_id}</p><p>Contact No:{clinic_details.contact_no}</p>
                     <h5>{clinic_details.about}</h5>
                     {clinic_details.doctors.map(dr =>
-                      <tr><td><a href="#" onClick={this.drHandler(`${dr._id}`)}>{dr.first_name} {dr.last_name}</a></td></tr>)}
+                      <tr><td><a href="#" onClick={this.drHandler(`${dr._id}`)}>{dr.first_name} {dr.last_name}</a></td>{this.props.schedule && <td>{this.props.schedule.map(s => s.time_slot)}</td>}</tr>)}
                   </tbody>
                 </table>
               </ClinicDetails>
@@ -55,11 +54,13 @@ class ClinicPage extends Component {
 
 function mapStateToProps(state) {
   return {
-    clinic_details: state.getClinicDetails.clinic_details
+    clinic_details: state.getClinicDetails.clinic_details,
+    schedule: state.getSchedule.schedule
   };
 }
 
 const mapDispatcherToProps = {
+  getSchedule
 }
 
 export default connect(mapStateToProps, mapDispatcherToProps)(ClinicPage);

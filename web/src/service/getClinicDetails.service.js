@@ -1,7 +1,5 @@
-import store from '../stores/store';
 const getClinicDetails = async (clinic_id) => {
     console.log(`clinic id:${clinic_id}`)
-    const storeToken = store.getState().login.token;
     const requestBody = {
         query: `
           query getClinicById($clinic_id:String!)
