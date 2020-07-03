@@ -5,6 +5,7 @@ const getClinicDetails = async (clinic_id) => {
           query getClinicById($clinic_id:String!)
           {
             getClinicById(clinic_id:$clinic_id) {
+                _id,
                 name,
                 email_id,
                 street,

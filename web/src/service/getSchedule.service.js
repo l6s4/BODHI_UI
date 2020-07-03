@@ -1,16 +1,18 @@
-const getSchedule = async (doctor_id) => {
-    // console.log(`clinic name:${doctor_id}`)
+const getSchedule = async (clinic_id, given_date) => {
+    console.log(`given date:${given_date}`)
     // const storeToken = store.getState().login.token;
     const requestBody = {
         query: `
-          query getSchedule($doctor_id:String!)
+          query getSchedule($clinic_id:String!,$given_date:String!)
           {
-            getSchedule(doctor_id:$doctor_id) {
-              time_slot
+            getSchedule(clinic_id:$clinic_id,given_date:$given_date) {
+              time_slot,
+              doctor_id
             }
         }`,
         variables: {
-            doctor_id: doctor_id
+            clinic_id: clinic_id,
+            given_date: given_date
         }
     };
     const response = await fetch('http://localhost:4000/graphql', {

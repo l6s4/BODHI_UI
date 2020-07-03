@@ -1,9 +1,9 @@
 import * as statusActions from '../constants/actionTypes';
 import getSchedule from '../service/getSchedule.service';
 
-function getTimeSlot(name) {
+function getTimeSlot(clinic_id, given_date) {
     return dispatch => {
-        getSchedule(name)
+        getSchedule(clinic_id, given_date)
             .then(response => {
                 dispatch(success(response));
             }, error => {
