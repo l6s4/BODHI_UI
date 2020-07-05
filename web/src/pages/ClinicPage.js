@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import MenuBar from '../components/MenuBar';
+import Select from 'react-select';
 import Label from '../components/Label';
 import ClinicDetails from '../components/ClinicDetails';
 import getSchedule from '../actions/getSchedule.action';
@@ -34,15 +35,14 @@ class ClinicPage extends Component {
   submitHandler = (event) => {
     event.preventDefault();
     this.setState({ submitted: true });
-    console.log(this.state.startDate);
     const given_date = moment(this.state.startDate).format("YYYY-MM-DD");
-    console.log(given_date);
     this.props.getSchedule(this.props.clinic_details._id, given_date);
   }
   render() {
     const { clinic_details } = this.props;
+    const schedule = this.props.schedule;
     return (
-      <div className="clinic">
+      <div className="clinicPage">
         <div style={{ position: "fixed", left: "0px" }}><MenuBar /></div>
         <form className="clinic-form">
           <div className="clinic" style={{ width: "70%", margin: "auto" }}>
@@ -68,7 +68,14 @@ class ClinicPage extends Component {
                       <td><Button className="button button1" align="center" onClick={this.submitHandler}>Get Available Doctors</Button>
                       </td>
                     </tr>
-                    <tr><td><div>{this.props.schedule && <td>{this.props.schedule.map(s => s.time_slot)}</td>}</div></td></tr>
+
+                    {(this.props.schedule) && <>
+                      {
+                        Object.entries(doctor_slot(this.props.schedule, this.props.clinic_details)).map(([ key, value ]) => {
+                          return <tr><td><h1>{key}</h1>
+                            <Select className="mt-4 col-md-8 col-offset-4" options={value.map(time => ({ label: time, value: time }))} /></td></tr>
+                        })
+                      }</>}
                     {/* {clinic_details.doctors.map(dr =>
                       <tr><td><a href="#" onClick={this.drHandler(`${dr._id}`)}>{dr.first_name} {dr.last_name}</a></td>{this.props.schedule && <td>{this.props.schedule.map(s => s.time_slot)}</td>}</tr>)} */}
                   </tbody>
@@ -77,9 +84,34 @@ class ClinicPage extends Component {
             </>}
           </div>
         </form>
-      </div>
+      </div >
     );
   }
+}
+
+function doctor_slot(schedule, clinic_details) {
+  let doctor_details = clinic_details.doctors;
+  let doctor_names = {};
+  doctor_details.map(details => {
+    const dr_id = details._id;
+    const dr_name = details.first_name + details.last_name;
+    doctor_names[ dr_id ] = dr_name;
+    return doctor_names;
+  })
+
+  let doctor_slot = {};
+  schedule.forEach(s => {
+    const doctorId = s.doctor_id;
+    const doctorName = doctor_names[ doctorId ];
+    const time_slot = s.time_slot;
+    let doctor = doctor_slot[ doctorName ];
+    if (!doctor) {
+      doctor_slot[ doctorName ] = [];
+      doctor = doctor_slot[ doctorName ];
+    }
+    doctor.push(time_slot);
+  });
+  return doctor_slot;
 }
 
 function mapStateToProps(state) {
