@@ -26,7 +26,6 @@ class BookAppointment extends Component {
   }
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    //console.log(`Option selected:`, selectedOption);
   }
   submitHandler = (event) => {
     event.preventDefault();

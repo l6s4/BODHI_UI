@@ -1,7 +1,7 @@
 import * as statusActions from '../constants/actionTypes';
 
 function getSchedule(state = [], action) {
-    console.log(`Get TimeSlot reducer:${JSON.stringify(action)}`);
+    // console.log(`Get TimeSlot reducer:${JSON.stringify(action)}`);
     switch (action.type) {
         case statusActions.GET_SCHEDULE_SUCCESS:
             return {

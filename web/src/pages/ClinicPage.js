@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import momenttz from "moment-timezone";
 import MenuBar from '../components/MenuBar';
+import { Redirect } from 'react-router-dom';
 import Select from 'react-select';
 import Label from '../components/Label';
 import ClinicDetails from '../components/ClinicDetails';
 import getSchedule from '../actions/getSchedule.action';
+import createBooking from '../actions/createBooking.action';
 import Button from '../components/Button';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,32 +18,46 @@ class ClinicPage extends Component {
     super(props);
     this.state = {
       submitted: false,
+      booked: false,
       startDate: new Date()
     }
-    // this.drHandler = this.drHandler.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
+    this.bookHandler = this.bookHandler.bind(this);
   }
-  // drHandler = (id) => {
-  //   return (event) => {
-  //     console.log(id);
-  //     this.props.getSchedule(id);
-  //   }
-  // }
   handleChange = date => {
     this.setState({
       startDate: date
     });
   };
+  handleTimeslotChange = (selectedOption) => {
+    this.setState({ selectedOption });
+  }
   submitHandler = (event) => {
     event.preventDefault();
     this.setState({ submitted: true });
     const given_date = moment(this.state.startDate).format("YYYY-MM-DD");
     this.props.getSchedule(this.props.clinic_details._id, given_date);
   }
+  bookHandler = (doctor, event) => {
+    event.preventDefault();
+    this.setState({ booked: true });
+    const doctor_id = doctor.split('_')[ 1 ];
+    const bookingInfo = {
+      patient_email_id: this.props.loggedUser,
+      clinic_id: this.props.clinic_details._id,
+      doctor_id: doctor_id,
+      time_slot: this.state.selectedOption.value,
+      status: "BOOKED"
+    }
+    this.props.createBooking(bookingInfo);
+  }
   render() {
-    const { clinic_details } = this.props;
-    const schedule = this.props.schedule;
+    const { clinic_details, schedule } = this.props;
+    const { submitted, booked } = this.state;
+    if (booked && this.props.bookedStatus) {
+      return <Redirect to="/mybookings" />
+    }
     return (
       <div className="clinicPage">
         <div style={{ position: "fixed", left: "0px" }}><MenuBar /></div>
@@ -69,15 +86,22 @@ class ClinicPage extends Component {
                       </td>
                     </tr>
 
-                    {(this.props.schedule) && <>
-                      {
-                        Object.entries(doctor_slot(this.props.schedule, this.props.clinic_details)).map(([ key, value ]) => {
-                          return <tr><td><h1>{key}</h1>
-                            <Select className="mt-4 col-md-8 col-offset-4" options={value.map(time => ({ label: time, value: time }))} /></td></tr>
-                        })
-                      }</>}
-                    {/* {clinic_details.doctors.map(dr =>
-                      <tr><td><a href="#" onClick={this.drHandler(`${dr._id}`)}>{dr.first_name} {dr.last_name}</a></td>{this.props.schedule && <td>{this.props.schedule.map(s => s.time_slot)}</td>}</tr>)} */}
+                    {submitted && (schedule) && <>{
+                      Object.entries(doctor_slot(schedule, clinic_details)).map(([ key, value ]) => {
+                        return <tr><td><h1>{key.split('_')[ 0 ]}</h1></td>
+                          <td><Select className="mt-4 col-md-8 col-offset-4" name="times" onChange={this.handleTimeslotChange} options={value.map(time => ({ label: convertToAESTAndTrim(time), value: time }))} /></td>
+                          <td><Button className="button button1" onClick={(event) => this.bookHandler(key, event)}>Book</Button></td></tr>
+                      })
+                    }</>}
+                    {submitted && (schedule) && schedule.length === 0 && <tr><td><Label>No Doctors Available on this date</Label></td></tr>}
+                    {/* {booked && !times && <tr><td><p>Please Select Time</p></td></tr>} */}
+                    {/* {(this.state.submitted) && !(this.props.schedule) && <tr><td><Label>No Doctors Available on this date</Label></td></tr>} */}
+                    {/* {submitted && <> {(this.props.schedule ?
+                      Object.entries(doctor_slot(schedule, clinic_details)).map(([ key, value ]) => {
+                        return <tr><td><h1>{key}</h1></td>
+                          <td><Select className="mt-4 col-md-8 col-offset-4" options={value.map(time => ({ label: time, value: time }))} /></td>
+                          <td><Button className="button button1" onClick={this.bookHandler}>Book</Button></td></tr>})
+                      : <tr><td><Label>No Doctors Available on this date</Label></td></tr>)}</>} */}
                   </tbody>
                 </table>
               </ClinicDetails>
@@ -104,25 +128,34 @@ function doctor_slot(schedule, clinic_details) {
     const doctorId = s.doctor_id;
     const doctorName = doctor_names[ doctorId ];
     const time_slot = s.time_slot;
-    let doctor = doctor_slot[ doctorName ];
+    const id_name = doctorName + "_" + doctorId
+    let doctor = doctor_slot[ id_name ];
     if (!doctor) {
-      doctor_slot[ doctorName ] = [];
-      doctor = doctor_slot[ doctorName ];
+      doctor_slot[ id_name ] = [];
+      doctor = doctor_slot[ id_name ];
     }
     doctor.push(time_slot);
   });
+  //console.log(doctor_slot);
   return doctor_slot;
+}
+
+function convertToAESTAndTrim(time) {
+  return momenttz.tz(time, "Australia/Sydney").format('HH:mm');
 }
 
 function mapStateToProps(state) {
   return {
+    loggedUser: state.login.loggedUser,
     clinic_details: state.getClinicDetails.clinic_details,
-    schedule: state.getSchedule.schedule
+    schedule: state.getSchedule.schedule,
+    bookedStatus: state.createBooking.bookedStatus
   };
 }
 
 const mapDispatcherToProps = {
-  getSchedule
+  getSchedule,
+  createBooking
 }
 
 export default connect(mapStateToProps, mapDispatcherToProps)(ClinicPage);
