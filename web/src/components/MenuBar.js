@@ -8,7 +8,7 @@ class MenuBar extends Component {
                 <ul>
                     <li><a href="/userProfile">Profile</a></li>
                     <li><a href="/booking">Book Appointment</a></li>
-                    <li><a href="#news">My Bookings</a></li>
+                    <li><a href="/mybookings">My Bookings</a></li>
                     <li><a href="#contact">Notifications</a></li>
                     <li><a href="/logout">LogOut</a></li>
                 </ul>

@@ -17,3 +17,30 @@
     -webkit-box-shadow: 0 1px whitesmoke;
     box-shadow: 0 1px whitesmoke;
 }
+
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.myBookings td, .myBookings th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.myBookings tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.myBookings tr:hover {
+    background-color: #ddd;
+}
+
+.myBookings th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}

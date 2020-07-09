@@ -8,6 +8,7 @@ import getClinicName from './getClinicName.reducer';
 import getClinicDetails from './getClinicDetails.reducer';
 import getSchedule from './getSchedule.reducer';
 import createBooking from './createBooking.reducer';
+import getMyBookings from './getMyBookings.reducer';
 import * as statusActions from '../constants/actionTypes';
 
 const appReducer = combineReducers({
@@ -19,6 +20,7 @@ const appReducer = combineReducers({
   getClinicDetails,
   getSchedule,
   createBooking,
+  getMyBookings,
   state: (state = {}) => state
 })
 

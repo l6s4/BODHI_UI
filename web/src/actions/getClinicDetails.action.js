@@ -1,7 +1,7 @@
 import * as statusActions from '../constants/actionTypes';
 import getClinicDetails from '../service/getClinicDetails.service';
 
-function getClinic(clinic_id) {
+const getClinic = function (clinic_id) {
     return dispatch => {
         getClinicDetails(clinic_id)
             .then(response => {
@@ -13,7 +13,13 @@ function getClinic(clinic_id) {
     }
 }
 
+const resetClinic = function () {
+    return dispatch => {
+        dispatch({ type: statusActions.CLINIC_DETAILS_RESET });
+    }
+}
+
 function success(successMsg) { return { type: statusActions.GET_CLINIC_DETAILS_SUCCESS, successMsg } };
 function failure(error) { return { type: statusActions.GET_CLINIC_DETAILS_FAILURE, error } };
 
-export default getClinic;
+export { getClinic, resetClinic };

@@ -12,6 +12,10 @@ function getClinicDetails(state = [], action) {
                 errorMsg: action.error,
                 errorOccurred: true
             }
+        case statusActions.CLINIC_DETAILS_RESET:
+            return {
+                clinic_details: null
+            }
         default:
             return state
     }

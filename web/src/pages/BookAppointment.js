@@ -5,8 +5,8 @@ import Select from 'react-select';
 import Box from '../components/Box';
 import { Redirect } from 'react-router-dom';
 import getClinicName from '../actions/getClinicName.action';
-import getClinicDetails from '../actions/getClinicDetails.action';
 import Button from '../components/Button';
+const { getClinic, resetClinic } = require('../actions/getClinicDetails.action');
 
 class BookAppointment extends Component {
   constructor (props) {
@@ -18,6 +18,13 @@ class BookAppointment extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.inputhandleChange = this.inputChangeHandler.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
+
+  }
+  componentDidMount() {
+    this.props.resetClinic();
+    this.setState({
+      clinic_details: null
+    })
   }
   inputChangeHandler = (event) => {
     if (event.match(/^[0-9a-zA-Z]+$/)) {
@@ -33,7 +40,7 @@ class BookAppointment extends Component {
     // const selectedId = this.props.clinic_name[ 0 ].id;
     // console.log("name:", this.state.selectedOption.value);
     const selectedClinic = this.state.selectedOption.value;
-    this.props.getClinicDetails(selectedClinic);
+    this.props.getClinic(selectedClinic);
   }
   render() {
     const { submitted } = this.state;
@@ -75,7 +82,8 @@ function mapStateToProps(state) {
 
 const mapDispatcherToProps = {
   getClinicName,
-  getClinicDetails
+  getClinic,
+  resetClinic
 }
 
 export default connect(mapStateToProps, mapDispatcherToProps)(BookAppointment);
